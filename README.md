@@ -20,7 +20,7 @@ It is very simple to build versions of Enchanting Plus. Enchanting Plus makes us
 
 Credits
 =======
-Manusoftar - Aditional Coding
+Manusoftar - Aditional Coding   
 Darkhax - Current Maintainer   
 Lclc98 - Current Maintainer   
 Xkyouchoux - Original Developer   
