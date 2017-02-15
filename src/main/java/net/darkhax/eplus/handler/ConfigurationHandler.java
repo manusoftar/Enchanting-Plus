@@ -19,6 +19,9 @@ public final class ConfigurationHandler {
     public static String[] blacklistedEnchantments = new String[] {};
     public static boolean allowScrollLoot = true;
     public static int scrollWeight = 10;
+    public static int bookshelfRows = 2;
+    public static boolean limitEnchantmentCost = false;
+    
     
     public static boolean allowScrollDrop = true;
     public static float scrollDropChance = 0.01f;
@@ -42,6 +45,8 @@ public final class ConfigurationHandler {
         blacklistedEnchantments = config.getStringList("blacklistedEnchantments", settings, new String[] {}, "A list of blacklisted enchantment ids. Each entry should be an integer.");
         allowScrollLoot = config.getBoolean("allowScrollLoot", settings, true, "If disabled, scrolls will only spawn in custom village chests.");
         scrollWeight = config.getInt("dungeonWeight", settings, 10, 1, Integer.MAX_VALUE, "The weight of enchantment scrolls spawning in dungeon chests");
+        bookshelfRows = config.getInt("bookshelfRows", settings, 2, 2, 4, "How many rows of bookshelfs will the table use as enchantment power source");
+        limitEnchantmentCost = config.getBoolean("limitEnchantmentCost", settings, false, "Whether or not to set a limit to the cost of the enchantments");
         
         if (config.hasChanged())
             config.save();

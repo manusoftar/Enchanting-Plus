@@ -5,6 +5,7 @@ import java.util.Random;
 import net.darkhax.bookshelf.block.BlockTileEntity;
 import net.darkhax.eplus.EnchantingPlus;
 import net.darkhax.eplus.common.network.GuiHandler;
+import net.darkhax.eplus.handler.ConfigurationHandler;
 import net.darkhax.eplus.handler.PlayerHandler;
 import net.darkhax.eplus.tileentity.TileEntityAdvancedTable;
 import net.minecraft.block.material.MapColor;
@@ -83,27 +84,53 @@ public class BlockAdvancedTable extends BlockTileEntity {
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick (IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
         
-        super.randomDisplayTick(stateIn, worldIn, pos, rand);
-        
-        for (int x = -2; x <= 2; ++x)
-            for (int z = -2; z <= 2; ++z) {
-                
-                if (x > -2 && x < 2 && z == -1)
-                    z = 2;
-                
-                if (rand.nextInt(16) == 0)
-                    for (int y = 0; y <= 1; ++y) {
-                        
-                        final BlockPos blockpos = pos.add(x, y, z);
-                        
-                        if (worldIn.getBlockState(blockpos).getBlock() == Blocks.BOOKSHELF) {
-                            
-                            if (!worldIn.isAirBlock(pos.add(x / 2, 0, z / 2)))
+//        super.randomDisplayTick(stateIn, worldIn, pos, rand);
+//        
+//        for (int x = -2; x <= 2; ++x)
+//            for (int z = -2; z <= 2; ++z) {
+//                
+//                if (x > -2 && x < 2 && z == -1)
+//                    z = 2;
+//                
+//                if (rand.nextInt(16) == 0)
+//                    for (int y = 0; y <= 1; ++y) {
+//                        
+//                        final BlockPos blockpos = pos.add(x, y, z);
+//                        
+//                        if (worldIn.getBlockState(blockpos).getBlock() == Blocks.BOOKSHELF) {
+//                            
+////                            if (!worldIn.isAirBlock(pos.add(x / 2, 0, z / 2)))
+////                                break;
+//                            System.out.println("Voy a generar una partícula");
+//                            worldIn.spawnParticle(EnumParticleTypes.ENCHANTMENT_TABLE, pos.getX() + 0.5D, pos.getY() + 2.0D, pos.getZ() + 0.5D, x + rand.nextFloat() - 0.5D, y - rand.nextFloat() - 1.0F, z + rand.nextFloat() - 0.5D, new int[0]);
+//                        }
+//                    }
+//            }
+    	
+    	super.randomDisplayTick(stateIn, worldIn, pos, rand);
+
+    	int yOffset = ConfigurationHandler.bookshelfRows;
+        for (int i = -2; i <= 2; ++i) {
+            for (int j = -2; j <= 2; ++j) {
+                if (i > -2 && i < 2 && j == -1) {
+                    j = 2;
+                }
+
+                if (rand.nextInt(16) == 0) {
+                    for (int k = -1; k <= 1; ++k) {
+                        BlockPos blockpos = pos.add(i, k, j);
+
+                        if (net.minecraftforge.common.ForgeHooks.getEnchantPower(worldIn, blockpos) > 0) {
+                            if (!worldIn.isAirBlock(pos.add(i / 2, 0, j / 2))) {
                                 break;
-                            
-                            worldIn.spawnParticle(EnumParticleTypes.ENCHANTMENT_TABLE, pos.getX() + 0.5D, pos.getY() + 2.0D, pos.getZ() + 0.5D, x + rand.nextFloat() - 0.5D, y - rand.nextFloat() - 1.0F, z + rand.nextFloat() - 0.5D, new int[0]);
+                            }
+
+                            worldIn.spawnParticle(EnumParticleTypes.ENCHANTMENT_TABLE, (double)pos.getX() + 0.5D, (double)pos.getY() + yOffset, (double)pos.getZ() + 0.5D, (double)((float)i + rand.nextFloat()) - 0.5D, (double)((float)k - rand.nextFloat() - 1.0F), (double)((float)j + rand.nextFloat()) - 0.5D, new int[0]);
                         }
                     }
+                }
             }
+        }
+    	
     }
 }

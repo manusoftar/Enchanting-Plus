@@ -72,7 +72,7 @@ public final class EnchantingPlus {
         MinecraftForge.EVENT_BUS.register(new ForgeEventHandler());
         
         PlayerHandler.init();
-        
+       
         ContentHandler.initBlocks();
         ContentHandler.initItems();
         ContentHandler.initRecipes();
